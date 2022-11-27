@@ -1,0 +1,43 @@
+.box h1{
+    text-transform: uppercase;
+    color: rgb(57, 161, 225) ;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    margin: 0em 0.2em 0em 0.2em;
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 1em 1em 1em 1em;
+    border: 5px solid white;
+    border-radius: 1em;
+}
+
+.box:hover{
+    border: 5px solid black;
+  }
+
+  body main{
+    margin-top: 8em;
+  }
+
+  button {
+    border-radius: 1em;
+    width:100%;
+  }
+
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+  }
+
+  label{
+    font-size: 2em;
+    display: block;
+    text-transform: uppercase;
+    color: rgb(57, 161, 225) ;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    margin: 0em 0.2em 0em 0.2em;
+    font-weight: bold;
+  }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>VISITED</title>
+    <link rel="stylesheet" type="text/css" href="navStile.css">
+    <link rel="stylesheet" type="text/css" href="box.css">
+  </head>
+  <body>
+    <header>
+      <div class="nav">
+        <input type="checkbox">
+          <span></span>
+          <span></span>
+          <div class="menu">
+            <li><a href="/">home</a></li>
+            <li><a href="/posti">explore</a></li>
+            <li><a href="#">visited</a></li>
+            <li><a href="/sfide">achievements</a></li>
+          </div>
+          <p data-item='SYP'>SYP</p>
+      </div>
+    </header>
+    
+    <main>
+      <h1><%=message%></h1>
+      <%listaPosti.forEach(posto => { %>
+        <div class="box">
+        <h1><%= posto.indirizzo%></h1> 
+        <hr> 
+        <h1><%= posto.citta%></h1>  
+        </div>
+      <%}) %>
+    </main>
+    <footer></footer>
+  </body>
+</html>

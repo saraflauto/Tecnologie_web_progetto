@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>EXPLORE</title>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">  </script>  
+    <link rel="stylesheet" type="text/css" href="navStile.css">
+    <link rel="stylesheet" type="text/css" href="box.css">
+  </head>
+  <body>
+    <header>
+      <div class="nav">
+        <input type="checkbox">
+          <span></span>
+          <span></span>
+          <div class="menu">
+            <li><a href="/">home</a></li>
+            <li><a href="#">explore</a></li>
+            <li><a href="/posti_completati">visited</a></li>
+            <li><a href="/sfide">achievements</a></li>
+          </div>
+          <p data-item='SYP'>SYP</p>
+      </div>
+    </header>
+    
+    <main>
+      <h1><%=message%></h1>
+      <%listaPosti.forEach(posto => { %>
+        <div class="box">
+        <form method="post" id="box">
+            <input type="radio" id="address" name="address" value= "<%= posto.indirizzo%>" checked>
+            <label for="html"><%= posto.indirizzo%></label>
+            <input type="radio" id="city" name="city" value= "<%= posto.citta%>" checked>
+            <label for="city"><%= posto.citta%></label>
+            <button type="submit">COMPLETE</button>
+        </form>
+        </div>
+      <%})%>
+    </main>
+
+    <footer></footer>
+
+    <script type='text/javascript'> 
+      $("button").click(function(){
+      $(this).hide();
+      
+        });
+      </script>
+
+  </body>
+</html>

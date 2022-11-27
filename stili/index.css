@@ -1,0 +1,57 @@
+
+body{
+    overflow: scroll;
+}
+
+body footer{
+    position:fixed;
+    margin-top: 29em;
+}
+
+/*STILE FORM*/
+form {
+    margin-top: -5vw;
+    border: 5px solid #f1f1f1;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 16px 8px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    }
+
+button {
+    background-color: white;
+    color: black;
+    padding: 14px 0;
+    margin: 10px 0;
+    border: none;
+    cursor: grab;
+    width: 48%;
+    }
+
+button:hover {
+     opacity: 0.8;
+    }
+
+form h1{
+    font-size: 4vw;
+    margin: 0px 6px 0px 6px;
+}
+
+.form{
+    text-align: center;
+    margin: 9em 3em 1em;
+    }
+
+.campi {
+    padding: 16px 0;
+    text-align:left;
+}
+
+
+
+

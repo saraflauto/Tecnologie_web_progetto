@@ -1,0 +1,44 @@
+<<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>ACHIEVEMENTS</title>
+    <link rel="stylesheet" type="text/css" href="navStile.css">
+    <link rel="stylesheet" type="text/css" href="box.css">
+    <link rel="stylesheet" type="text/css" href="level.css">
+  </head>
+  <body>
+    <header>
+      <div class="nav">
+        <input type="checkbox">
+          <span></span>
+          <span></span>
+          <div class="menu">
+            <li><a href="/">home</a></li>
+            <li><a href="/posti">explore</a></li>
+            <li><a href="/posti_completati">visited</a></li>
+            <li><a href="#">achievements</a></li>
+          </div>
+          <p data-item='SYP'>SYP</p>
+      </div>
+    </header>
+    
+    <main>
+      <h1><%=message%></h1>
+      <div class="level">
+        <h1>Level: <%= livello%></h1>
+        <h1>Points: <%= punti%></h1>
+      </div>
+      
+      <%obiettivi.forEach(obiettivo => { %>
+        <div class="box">
+        <h1><%= obiettivo.descrizione%></h1> 
+        <hr> 
+        <h1><%= obiettivo.punti%> points</h1> 
+        </div>
+      <%}) %>
+    </main>
+    <footer></footer>
+  </body>
+</html>
+
