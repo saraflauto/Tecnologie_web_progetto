@@ -30,7 +30,7 @@
         <div class="box">
         <form method="post" id="box">
             <input type="radio" id="address" name="address" value= "<%= posto.indirizzo%>" checked>
-            <label for="html"><%= posto.indirizzo%></label>
+            <label for="address"><%= posto.indirizzo%></label>
             <input type="radio" id="city" name="city" value= "<%= posto.citta%>" checked>
             <label for="city"><%= posto.citta%></label>
             <button type="submit">COMPLETE</button>
@@ -40,13 +40,6 @@
     </main>
 
     <footer></footer>
-
-    <script type='text/javascript'> 
-      $("button").click(function(){
-      $(this).hide();
-      
-        });
-      </script>
 
   </body>
 </html>
