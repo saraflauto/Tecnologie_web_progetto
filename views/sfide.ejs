@@ -24,12 +24,12 @@
     </header>
     
     <main>
-      <h1><%=message%></h1>
       <div class="level">
         <h1>Level: <%= livello%></h1>
         <h1>Points: <%= punti%></h1>
       </div>
-      
+       <h1><%=message%></h1>
+       
       <%obiettivi.forEach(obiettivo => { %>
         <div class="box">
         <h1><%= obiettivo.descrizione%></h1> 
