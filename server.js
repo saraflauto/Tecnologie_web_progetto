@@ -26,13 +26,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //css
 app.use(express.static("stili"));
 
-//jquery
-var jsdom = require("jsdom");
-const { JSDOM } = jsdom;
-const { window } = new JSDOM();
-const { document } = (new JSDOM('')).window;
-global.document = document;
-var $ = require("jquery")(window);
 
 //home page
 app.get("/", function (req, res) {
