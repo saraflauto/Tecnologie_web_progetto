@@ -64,7 +64,7 @@ app.post("/", function (req, res) {
 //posti
 app.get("/posti", function (req, res) {
    
-   client.db("save_your_place").collection("posto").find({completato: "no"}).toArray(function(err, result) {
+   client.db("save_your_place").collection("posto").find({completato: "no"}).sort({citta: 1, indirizzo: 1}).toArray(function(err, result) {
       if (err) throw err;
       var mess = ""; 
       if(result.length== 0)
@@ -133,7 +133,7 @@ app.post("/posti", function (req, res) {
 
 //posti completati
 app.get("/posti_completati", function (req, res) {
-   client.db("save_your_place").collection("posto").find({completato: "yes"}).toArray(function(err, result) {
+     client.db("save_your_place").collection("posto").find({completato: "yes"}).sort({citta: 1, indirizzo: 1}).toArray(function(err, result) {
       if (err) throw err;
 
       var mess = ""; 
