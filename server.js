@@ -112,7 +112,7 @@ app.post("/posti", function (req, res) {
       if (err) throw err;
       result.forEach( element => { 
          console.log(numberOfPlaces);
-         if(element.punti == numberOfPlaces)
+         if(element.punti <= numberOfPlaces)
          client.db("save_your_place").collection("obiettivo").updateOne({descrizione: element.descrizione, tipo: element.tipo}, {$set: {completato: "yes"}});   
       })
    })
@@ -132,7 +132,7 @@ app.post("/posti", function (req, res) {
       if (err) throw err;
       result.forEach( element => { 
          console.log(numberOfPlaces);
-         if(element.punti == numberOfPlaces)
+         if(element.punti <= numberOfPlaces)
          client.db("save_your_place").collection("obiettivo").updateOne({descrizione: element.descrizione, tipo: element.tipo}, {$set: {completato: "yes"}});   
       })
    })
