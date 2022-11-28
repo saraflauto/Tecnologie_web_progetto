@@ -85,20 +85,10 @@ app.post("/posti", function (req, res) {
 
    //Aggiorna il posto come completato
    update(address, city);
-   //Ricarica la pagina
-   client.db("save_your_place").collection("posto").find({completato: "no"}).toArray(function(err, result) {
-      if (err) throw err;
 
-      var mess = ""; 
-      if(result.length == 0)
-      mess = "THERE ARE NO PLACES. ADD SOME PLACES!";
-      
-      res.render("posti", { 
-         listaPosti: result,
-         message: mess
-      });
-   });
-
+    //Ricarica la pagina
+   res.redirect("/posti");
+   
    //Contiamo i posti completati. La funzione count() di mongodb non funziona
    client.db("save_your_place").collection("posto").find({completato: "yes"}).toArray(function(err, result) {
       if (err) throw err;
