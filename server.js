@@ -47,7 +47,7 @@ app.post("/", function (req, res) {
    client.db("save_your_place").collection("posto").find({indirizzo: address.toUpperCase(), citta: city.toUpperCase()}).toArray(function(err, result) {
       
       if (err) throw err;
-      var mess="PLACE ADDED WITH SUCCESS";
+      var mess="PLACE SUCCESSFULLY ADDED";
 
       if(result.length > 0)
          mess = "ERROR: THE PLACE ALREADY EXISTS"
