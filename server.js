@@ -28,7 +28,7 @@ app.use(express.static("stili"));
 
 
 //home page
-app.get("/", function (req, res) {
+app.get("/home", function (req, res) {
    
    res.render("index", { 
       message: ""
@@ -37,7 +37,7 @@ app.get("/", function (req, res) {
 });
 
 //Sottomissione del form in home page
-app.post("/", function (req, res) {
+app.post("/home", function (req, res) {
    var address = req.body.address;
    var city = req.body.city;
    console.log(address + " " + city);
@@ -62,7 +62,7 @@ app.post("/", function (req, res) {
 })
 
 //posti
-app.get("/posti", function (req, res) {
+app.get("/explore", function (req, res) {
    
    client.db("save_your_place").collection("posto").find({completato: "no"}).sort({citta: 1, indirizzo: 1}).toArray(function(err, result) {
       if (err) throw err;
@@ -79,7 +79,7 @@ app.get("/posti", function (req, res) {
 });
 
 //Quando si completa un posto
-app.post("/posti", function (req, res) {
+app.post("/explore", function (req, res) {
    var address = req.body.address;
    var city = req.body.city;
 
@@ -132,7 +132,7 @@ app.post("/posti", function (req, res) {
 })
 
 //posti completati
-app.get("/posti_completati", function (req, res) {
+app.get("/visited", function (req, res) {
      client.db("save_your_place").collection("posto").find({completato: "yes"}).sort({citta: 1, indirizzo: 1}).toArray(function(err, result) {
       if (err) throw err;
 
@@ -148,7 +148,7 @@ app.get("/posti_completati", function (req, res) {
    });
 });
 
-app.get("/sfide", function (req, res) {
+app.get("/achievements", function (req, res) {
    //Conta i punti e calcola il livello
    client.db("save_your_place").collection("obiettivo").find({completato: "yes"}).toArray(function(err, result) {
       if (err) throw err;
