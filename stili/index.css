@@ -4,8 +4,8 @@ body{
 }
 
 body footer{
-    position:fixed;
-    margin-top: 29em;
+    position:absolute;
+    margin-top: 33em;
 }
 
 /*STILE FORM*/
@@ -44,7 +44,7 @@ form h1{
 
 .form{
     text-align: center;
-    margin: 9em 3em 1em;
+    margin: 5em 3em 1em;
     }
 
 .campi {
@@ -53,5 +53,9 @@ form h1{
 }
 
 
+div h2{
+    margin-top: 4em;
+    text-align: center;
+}
 
 
