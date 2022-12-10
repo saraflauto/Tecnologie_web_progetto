@@ -78,8 +78,16 @@ function isLoggedIn(req, res, next) {
 //home page
 app.get("/home", function (req, res) {
    
+   let wel;
+
+   if(fullname == " ")
+      wel = "LOG IN TO ADD PLACE";
+   else
+      wel = "WELCOME " + fullname + "!";
+   
    res.render("index", { 
-      message: ""
+      message: "",
+      welcome: wel
    });
 
 });
@@ -88,11 +96,16 @@ app.get("/home", function (req, res) {
 app.post("/home", function (req, res) {
    var address = req.body.address;
    var city = req.body.city;
+   let wel;
+   var mess;
    console.log(address + " " + city);
+   
+   if(fullname != " "){
+      wel = "WELCOME " + fullname + "!";
       
    //Verifichaimo se il posto inserito è già esistente
    //Dobbiamo usare find enon findOne perchè quest'ultima non funziona come dovrebbe
-   client.db("save_your_place").collection("posto").find({indirizzo: address.toUpperCase(), citta: city.toUpperCase()}).toArray(function(err, result) {
+   client.db("save_your_place").collection("posto").find({indirizzo: address.toUpperCase(), citta: city.toUpperCase(), id: id}).toArray(function(err, result) {
       
       if (err) throw err;
       var mess="PLACE SUCCESSFULLY ADDED";
@@ -100,13 +113,23 @@ app.post("/home", function (req, res) {
       if(result.length > 0)
          mess = "ERROR: THE PLACE ALREADY EXISTS"
       else 
-         add({indirizzo: address.toUpperCase(), citta: city.toUpperCase(), completato: "no"});
+         add({indirizzo: address.toUpperCase(), citta: city.toUpperCase(), completato: "no", id: id});
       
       res.render("index", { 
-         message: mess
+          message: mess,
+         welcome: wel
       });
       });
-
+      }
+ 
+   else{
+      wel = "LOG IN TO ADD PLACE";
+      mess = "ERROR: YOUR ARE NOT LOG IN";
+      res.render("index", { 
+         message: mess,
+         welcome: wel
+      });
+   }
 })
 
 //posti
