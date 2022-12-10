@@ -135,10 +135,13 @@ app.post("/home", function (req, res) {
 //posti
 app.get("/explore", function (req, res) {
    
-   client.db("save_your_place").collection("posto").find({completato: "no"}).sort({citta: 1, indirizzo: 1}).toArray(function(err, result) {
+   client.db("save_your_place").collection("posto").find({completato: "no", id: id}).sort({citta: 1, indirizzo: 1}).toArray(function(err, result) {
       if (err) throw err;
-      var mess = ""; 
-      if(result.length== 0)
+      var mess = "";
+      
+      if(id = " ")
+      mess = "LOG IN TO SEE YOUR PLACES";
+      else if(result.length== 0)
       mess = "THERE ARE NO PLACES. ADD SOME PLACES!";
 
       res.render("posti", { 
@@ -279,7 +282,7 @@ async function add(newData){
 
 //Funzione che aggiorna i dati nel databse mettondo completato il posto
 function update(address, city){
-   const it = client.db("save_your_place").collection("posto").updateOne({indirizzo: address, citta:city}, {$set: {completato: "yes"}});   
+   const it = client.db("save_your_place").collection("posto").updateOne({indirizzo: address, citta:city, id: id}, {$set: {completato: "yes"}});      
 }
 
 
