@@ -139,7 +139,7 @@ app.get("/explore", function (req, res) {
       if (err) throw err;
       var mess = "";
       
-      if(id = " ")
+      if(id == " ")
       mess = "LOG IN TO SEE YOUR PLACES";
       else if(result.length== 0)
       mess = "THERE ARE NO PLACES. ADD SOME PLACES!";
@@ -161,48 +161,7 @@ app.post("/explore", function (req, res) {
    update(address, city);
 
     //Ricarica la pagina
-   res.redirect("/posti");
-   
-   //Contiamo i posti completati. La funzione count() di mongodb non funziona
-   client.db("save_your_place").collection("posto").find({completato: "yes"}).toArray(function(err, result) {
-      if (err) throw err;
-
-      var numberOfPlaces = 0;
-      result.forEach( element => {
-         numberOfPlaces++;
-      })
-      //Aggiorniamo gli obiettivi sul numero di posti da vedere
-   client.db("save_your_place").collection("obiettivo").find({tipo: "ep", completato: "no" }).toArray(function(err, result) {
-      if (err) throw err;
-      result.forEach( element => { 
-         console.log(numberOfPlaces);
-         if(element.punti <= numberOfPlaces)
-         client.db("save_your_place").collection("obiettivo").updateOne({descrizione: element.descrizione, tipo: element.tipo}, {$set: {completato: "yes"}});   
-      })
-   })
-   })
-
-   //Contiamo i posti completati nella stessa città di quello appena completato.
-   client.db("save_your_place").collection("posto").find({citta: city, completato: "yes"}).toArray(function(err, result) {
-      if (err) throw err;
-
-      var numberOfPlaces = 0;
-      result.forEach( element => {
-         numberOfPlaces++;
-      })
-
-   //Aggiorniamo gli obiettivi sul numero di città da vedere
-   client.db("save_your_place").collection("obiettivo").find({tipo: "ec", completato: "no" }).toArray(function(err, result) {
-      if (err) throw err;
-      result.forEach( element => { 
-         console.log(numberOfPlaces);
-         if(element.punti <= numberOfPlaces)
-         client.db("save_your_place").collection("obiettivo").updateOne({descrizione: element.descrizione, tipo: element.tipo}, {$set: {completato: "yes"}});   
-      })
-   })
-   
-   })
-
+   res.redirect("/explore");
 })
 
 //posti completati
@@ -212,7 +171,7 @@ app.get("/visited", function (req, res) {
 
       var mess = ""; 
         
-      if(id = " ")
+      if(id == " ")
       mess = "LOG IN TO SEE YOUR PLACES";
       else if(result.length== 0)
       mess = "THERE ARE NO PLACES. EXPLORE SOME PLACES!";
@@ -227,16 +186,29 @@ app.get("/visited", function (req, res) {
 
 app.get("/achievements", function (req, res) {
    //Conta i punti e calcola il livello
-   client.db("save_your_place").collection("obiettivo").find({completato: "yes"}).toArray(function(err, result) {
+   client.db("save_your_place").collection("posto").find({completato: "yes", id: id}).toArray(function(err, result) {
       if (err) throw err;
 
-      var points = 0;
-      let level;
-      result.forEach(element => {
-         points += element.punti;
-      });
+      var numberOfPlaces = 0;
+      result.forEach( element => {
+         numberOfPlaces++;
+      })
 
-      //Livello
+   //Vediamo quali obiettivi sono completati
+   var points = 0;
+   client.db("save_your_place").collection("obiettivo").find({}).toArray(function(err, result) {
+      if (err) throw err;
+      for(var i = 0; i < result.length; i++)
+      {
+         if(result[i].punti <= numberOfPlaces)
+         {
+            points+= result[i].punti;
+            result.splice(i, 1);
+         }
+      }
+      let level;
+
+      //In base ai punti che abbiamo, stabiliamo il livello 
       if(points == 0)
       level = 0;
       else if(points >= 5 && points<=14)
@@ -250,22 +222,20 @@ app.get("/achievements", function (req, res) {
       else if(points >= 60)
       level = 5;
 
-      //Mostra gli obiettivi non completati
-      client.db("save_your_place").collection("obiettivo").find({completato: "no"}).toArray(function(err, result) {
-         if (err) throw err;
-         
-         var mess = ""; 
+      var mess = ""; 
+         //se non abbiamo obiettivi allora mostriamo una stringa opportuna
          if(result.length == 0)
          mess = "ALL THE ACHIEVEMENTS ARE COMPLETED!";
    
+         //renderizza sfide.ejs con il livello, i punti, il messaggio e l'array di obiettivi non completati
          res.render("sfide", { 
             obiettivi: result,
             livello:level, 
             punti: points,
             message: mess 
          });
-      });
-   });
+   })
+   })
 });
 
 var port = process.env.PORT || 3000;
