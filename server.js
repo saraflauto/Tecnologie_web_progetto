@@ -32,9 +32,9 @@ const passport = require('passport');
 require('./auth');
 
 //id dell'account google
-const id = " ";
+var id = " ";
 //nome dell'account google
-const fullname = " ";
+var fullname = " ";
 function isLoggedIn(req, res, next) {
    req.user ? next() : res.sendStatus(401);
  }
