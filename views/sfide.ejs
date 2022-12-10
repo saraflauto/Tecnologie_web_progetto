@@ -14,9 +14,9 @@
           <span></span>
           <span></span>
           <div class="menu">
-            <li><a href="/">home</a></li>
-            <li><a href="/posti">explore</a></li>
-            <li><a href="/posti_completati">visited</a></li>
+            <li><a href="/home">home</a></li>
+            <li><a href="/explore">explore</a></li>
+            <li><a href="/visited">visited</a></li>
             <li><a href="#">achievements</a></li>
           </div>
           <p data-item='SYP'>SYP</p>
@@ -24,12 +24,14 @@
     </header>
     
     <main>
+      
       <div class="level">
         <h1>Level: <%= livello%></h1>
         <h1>Points: <%= punti%></h1>
       </div>
-       <h1><%=message%></h1>
-       
+
+      <h1><%=message%></h1>
+      
       <%obiettivi.forEach(obiettivo => { %>
         <div class="box">
         <h1><%= obiettivo.descrizione%></h1> 
