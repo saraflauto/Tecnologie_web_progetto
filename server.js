@@ -207,11 +207,14 @@ app.post("/explore", function (req, res) {
 
 //posti completati
 app.get("/visited", function (req, res) {
-     client.db("save_your_place").collection("posto").find({completato: "yes"}).sort({citta: 1, indirizzo: 1}).toArray(function(err, result) {
+     client.db("save_your_place").collection("posto").find({completato: "yes", id: id}).sort({citta: 1, indirizzo: 1}).toArray(function(err, result) {
       if (err) throw err;
 
       var mess = ""; 
-      if(result.length == 0)
+        
+      if(id = " ")
+      mess = "LOG IN TO SEE YOUR PLACES";
+      else if(result.length== 0)
       mess = "THERE ARE NO PLACES. EXPLORE SOME PLACES!";
 
       res.render("posti_completati", { 
