@@ -124,7 +124,7 @@ app.post("/home", function (req, res) {
  
    else{
       wel = "LOG IN TO ADD PLACE";
-      mess = "ERROR: YOUR ARE NOT LOG IN";
+      mess = "ERROR: YOUR ARE NOT LOGGED IN";
       res.render("index", { 
          message: mess,
          welcome: wel
