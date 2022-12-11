@@ -44,7 +44,7 @@ function isLoggedIn(req, res, next) {
  app.use(passport.session());
  
  app.get('/', (req, res) => {
-   res.send('<a href="/auth/google">Authenticate with Google</a>');
+   res.render('login');
  });
  
  app.get('/auth/google',
