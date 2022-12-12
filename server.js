@@ -206,6 +206,17 @@ app.get("/achievements", function (req, res) {
             result.splice(i, 1);
          }
       }
+      
+      for(var i = 0; i < result.length; i++)
+      {
+         console.log(result[i].punti + " " + numberOfPlaces);
+         if(result[i].punti <= numberOfPlaces)
+         {
+            points+= result[i].punti;
+            result.splice(i, 1);
+         }
+      }
+      
       let level;
 
       //In base ai punti che abbiamo, stabiliamo il livello 
