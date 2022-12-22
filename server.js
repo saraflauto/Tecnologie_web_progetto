@@ -81,7 +81,7 @@ app.get("/home", function (req, res) {
    let wel;
 
    if(fullname == " ")
-      wel = "LOG IN TO ADD PLACE";
+      wel = "LOG IN TO ADD PLACES";
    else
       wel = "WELCOME " + fullname + "!";
    
