@@ -29,6 +29,7 @@ app.use(express.static("stili"));
 //Login google
 const session = require('express-session');
 const passport = require('passport');
+const { response } = require('express');
 require('./auth');
 
 //id dell'account google
@@ -51,16 +52,21 @@ function isLoggedIn(req, res, next) {
    passport.authenticate('google', { scope: [ 'email', 'profile' ] }
  ));
  
+
  app.get( '/auth/google/callback',
    passport.authenticate( 'google', {
+      //Quando l'autenticazione avviene con successo redirigi su getInfo'
      successRedirect: '/getinfo',
+     //Quando fallisce invece su /auth/google/failure
      failureRedirect: '/auth/google/failure'
    })
  );
- 
+
+ //Ci server per memorizzarre l'uid e il nome completo'
  app.get('/getinfo', isLoggedIn, (req, res) => {
    id = req.user.id;
    fullname = req.user.displayName;
+   //Una volta salvati redirigi sulla home
    res.redirect('/home');
  });
  
@@ -70,6 +76,7 @@ function isLoggedIn(req, res, next) {
    res.redirect('/');
  });
  
+ //Mostra un messaggio d'errore'
  app.get('/auth/google/failure', (req, res) => {
    res.send('Failed to authenticate..');
  });
@@ -166,7 +173,7 @@ app.post("/explore", function (req, res) {
 
 //posti completati
 app.get("/visited", function (req, res) {
-     client.db("save_your_place").collection("posto").find({completato: "yes", id: id}).sort({citta: 1, indirizzo: 1}).toArray(function(err, result) {
+     client.db("save_your_place").collection("posto").find({completato: "yes", id: id}).sort({citta: 1, indirizzo: 1}).toArray(async function(err, result) {
       if (err) throw err;
 
       var mess = ""; 
@@ -176,9 +183,24 @@ app.get("/visited", function (req, res) {
       else if(result.length== 0)
       mess = "THERE ARE NO PLACES. EXPLORE SOME PLACES!";
 
+      var posti = [];
+      var posto;
+      for(var i = 0; i < result.length; i++){
+         const response = await fetch("https://api.geoapify.com/v1/geocode/autocomplete?text="+ result[i].indirizzo+" "+result[i].citta+ "&format=json&apiKey=ced3ade89fbb44fd9d98e0f09ca90d45");
+         const data = await response.json(); 
+         posto = new Object;
+         posto.lat =  data.results[0].lat;
+         posto.lon = data.results[0].lon;
+         posto.text = result[i].indirizzo+" "+result[i].citta;
+         posti.push(posto);
+         console.log(posti);
+         console.log(posto);
+      }
+
       res.render("posti_completati", { 
          listaPosti: result, 
-         message: mess
+         message: mess,
+         coordinate: posti
       });
 
    });
@@ -268,6 +290,15 @@ async function add(newData){
 function update(address, city){
    const it = client.db("save_your_place").collection("posto").updateOne({indirizzo: address, citta:city, id: id}, {$set: {completato: "yes"}});      
 }
+
+var requestOptions = {
+   method: 'GET',
+ };
+ 
+ fetch("https://api.geoapify.com/v1/geocode/search?text=38%20Upper%20Montagu%20Street%2C%20Westminster%20W1H%201LJ%2C%20United%20Kingdom&apiKey=ced3ade89fbb44fd9d98e0f09ca90d45", requestOptions)
+   .then(response => response.json())
+   .then(result => console.log(result))
+   .catch(error => console.log('error', error));
 
 
 

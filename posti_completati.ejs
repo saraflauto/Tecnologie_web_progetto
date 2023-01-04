@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>VISITED</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+
+   <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"  integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+   crossorigin=""></script>
+
+    <link rel="stylesheet" type="text/css" href="navStile.css">
+    <link rel="stylesheet" type="text/css" href="box.css">
+
+   <script src="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.umd.js"></script>
+
+    <style>
+      #map{
+        height: 27em;
+        width: 35em;
+        margin-top: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="nav">
+        <input type="checkbox">
+          <span></span>
+          <span></span>
+          <div class="menu">
+            <li><a href="/home">home</a></li>
+            <li><a href="/explore">explore</a></li>
+            <li><a href="#">visited</a></li>
+            <li><a href="/achievements">achievements</a></li>
+          </div>
+          <p data-item='SYP'>SYP</p>
+      </div>
+    </header>
+    
+    <main>
+      <div id="map"></div>
+      <h1><%=message%></h1>
+      <%listaPosti.forEach(posto => { %>
+        <div class="box">
+        <h1><%= posto.indirizzo%></h1> 
+        <hr> 
+        <h1><%= posto.citta%></h1>  
+        </div>
+      <%}) %>
+    </main>
+    <footer></footer>
+
+    <script>
+
+      var map = L.map('map').setView([51.505, -0.09], 3);
+
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+      maxZoom: 20,
+      subdomains:['mt0','mt1','mt2','mt3']
+      });
+      googleStreets.addTo(map);
+
+
+    // search
+    function visualizza( ob){
+      console.log(ob);
+    }
+
+    var result = '<%- JSON.stringify(coordinate) %>';
+    var json = JSON.parse(result);
+    var lat, lon;
+    json.forEach(element => {
+      lat = element.lat;
+      lon = element.lon;
+      var marker = new L.Marker([lat, lon]);
+      marker.bindPopup(element.text).openPopup();
+      marker.addTo(map);
+
+    });
+    </script>
+  </body>
+</html>
